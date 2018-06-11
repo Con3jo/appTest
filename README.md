@@ -1,0 +1,1 @@
+Just run ```python -m SimpleHTTPServer 
