@@ -1,1 +1,1 @@
-Just run ``python -m SimpleHTTPServer ```
+Just run ```python -m SimpleHTTPServer ``
