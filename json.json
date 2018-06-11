@@ -1,0 +1,148 @@
+{
+    "MANDT": [{
+            "field": "ID",
+            "label": "ID"
+        },
+        {
+            "field": "MWAER",
+            "label": "Währung"
+        },
+        {
+            "field": "ORT01",
+            "label": "Ort"
+        },
+        {
+            "parse": [
+                {
+                    "$match": {
+                        "parentLayer0": "#ID",
+                        "group": "BUKRS"
+                    }
+                },
+                {
+                    "$group": {
+                    "_id": null,
+                    "value": {"$sum": 1}
+                    }
+                }
+            ],
+            "label": "Buchungskreise",
+            "beautify": "number",
+            "section": "perfInfo"
+        },
+        {
+            "parse": [
+                {
+                    "$match": {
+                        "parentLayer0": "#ID",
+                        "group": "WERKS"
+                    }
+                },
+                {
+                    "$group": {
+                    "_id": null,
+                    "value": {"$sum": 1}
+                    }
+                }
+            ],
+            "label": "Werke",
+            "beautify": "number",
+            "section": "perfInfo"
+        },
+        {
+            "parse": [
+                {
+                    "$match": {
+                        "parentLayer0": "#ID",
+                        "group": "EKORG"
+                    }
+                },
+                {
+                    "$group": {
+                    "_id": null,
+                    "value": {"$sum": 1}
+                    }
+                }
+            ],
+            "label": "Einkaufsorganisationen",
+            "beautify": "number",
+            "section": "perfInfo"
+        },
+        {
+            "parse": [
+                {
+                    "$match": {
+                        "parentLayer0": "#ID",
+                        "group": "VKORG"
+                    }
+                },
+                {
+                    "$group": {
+                    "_id": null,
+                    "value": {"$sum": 1}
+                    }
+                }
+            ],
+            "label": "Verkaufsorganisationen",
+            "beautify": "number",
+            "section": "perfInfo"
+        },
+        {
+            "parse": [
+                {
+                    "$match": {
+                        "parentLayer0": "#ID",
+                        "group": "LIFNR"
+                    }
+                },
+                {
+                  "$group": {
+                    "_id": null,
+                    "value": {"$sum": 1}
+                    }
+                }
+            ],
+            "label": "Lieferanten",
+            "beautify": "number",
+            "section": "perfInfo"
+        },
+        {
+            "parse": [
+                {
+                    "$match": {
+                        "parentLayer0": "#ID",
+                        "group": "KUNNR"
+                    }
+                },
+                {
+                  "$group": {
+                    "_id": null,
+                    "value": {"$sum": 1}
+                    }
+                }
+            ],
+            "label": "Kunden",
+            "beautify": "number",
+            "section": "perfInfo"
+        },
+        {
+            "parse": [
+                {
+                    "$match": {
+                        "parentLayer0": "#ID",
+                        "group": "VORNR"
+                    }
+                },
+                {
+                  "$group": {
+                    "_id": null,
+                    "value": {"$sum": 1}
+                    }
+                }
+            ],
+            "label": "Vorgänge",
+            "beautify": "number",
+            "section": "perfInfo"
+        }
+    ]
+}

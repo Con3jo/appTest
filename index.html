@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8"/>
+
+<title>Page Title</title>
+<script type="application/json" src="json.json"></script>
+<script src="https://d3js.org/d3.v5.min.js"></script>
+
+</head>
+<style>
+table{
+	border: none;
+}
+body{
+	font-family: sans-serif;
+}
+
+/*Todo refactor this! */
+tr th{
+	padding: 4px 15px;
+	background-color: rgba(100, 200, 200);
+	border: none;
+	border-radius: 5px;
+
+
+}
+tr td{
+	background-color: rgba(200,200,200,.3);
+	padding: 2px 15px;
+	border: none;
+	border-radius: 5px;
+
+
+}
+tr td table tr th{
+	background-color: rgba(100,200,200,.7);
+}
+tr td table tr td table tr th{
+	background-color: rgba(100,200,200,.5);
+
+}
+tr td table tr td table tr td table tr th{
+	background-color: rgba(100,200,200,.2);
+
+}
+</style>
+<body>
+
+	<script>
+	   /*var request = new XMLHttpRequest();
+	   request.open("GET", "json.json", false);
+	   request.send(null)
+	   var my_JSON_object = JSON.parse(request.responseText);
+	   console.log(my_JSON_object);
+	   document.getElementById("jsonData").innerHTML="test";*/
+
+	   var jsonString = '{"MANDT":[{"field":"ID","label":"ID"},{"field":"MWAER","label":"Währung"},{"field":"ORT01","label":"Ort"},{"parse":[{"$match":{"parentLayer0":"#ID","group":"BUKRS"}},{"$group":{"_id":null,"value":{"$sum":1}}}],"label":"Buchungskreise","beautify":"number","section":"perfInfo"},{"parse":[{"$match":{"parentLayer0":"#ID","group":"WERKS"}},{"$group":{"_id":null,"value":{"$sum":1}}}],"label":"Werke","beautify":"number","section":"perfInfo"},{"parse":[{"$match":{"parentLayer0":"#ID","group":"EKORG"}},{"$group":{"_id":null,"value":{"$sum":1}}}],"label":"Einkaufsorganisationen","beautify":"number","section":"perfInfo"},{"parse":[{"$match":{"parentLayer0":"#ID","group":"VKORG"}},{"$group":{"_id":null,"value":{"$sum":1}}}],"label":"Verkaufsorganisationen","beautify":"number","section":"perfInfo"},{"parse":[{"$match":{"parentLayer0":"#ID","group":"LIFNR"}},{"$group":{"_id":null,"value":{"$sum":1}}}],"label":"Lieferanten","beautify":"number","section":"perfInfo"},{"parse":[{"$match":{"parentLayer0":"#ID","group":"KUNNR"}},{"$group":{"_id":null,"value":{"$sum":1}}}],"label":"Kunden","beautify":"number","section":"perfInfo"},{"parse":[{"$match":{"parentLayer0":"#ID","group":"VORNR"}},{"$group":{"_id":null,"value":{"$sum":1}}}],"label":"Vorgänge","beautify":"number","section":"perfInfo"}]}';
+	   	var dataJSON = JSON.parse(jsonString);
+
+
+		var table = d3.select("body").selectAll("table")
+		    .data([dataJSON.MANDT])
+		  .enter().append("table")
+		    .call(renderSingleTable);
+
+
+		function renderSingleTable(dataTable) {
+		  dataTable.each(function(d) {
+		    var colnames,
+		        tds,
+		        table = d3.select(this);
+		        if(d instanceof Array){
+		        	//this is magic
+				    colnames = d.reduce(function(p,c) { return p.concat(d3.keys(c)); }, [])       
+				        .reduce(function(p,c) { return (p.set(c,0), p); }, d3.map())      
+				        .keys();    
+				    }
+		        else{//if is an object
+		        	colnames = d3.keys(d);
+		        	d = [d];
+		        }
+
+
+		      //console.log("data",d);
+
+		    //Header
+		    table.append("thead").append("tr").selectAll("th")
+		        .data(colnames)
+		      .enter().append("th")
+		        .text(function(d) { return d; });
+
+		    //Row
+		    tds = table.append("tbody").selectAll("tr")
+		        .data(d)
+		      .enter().append("tr").selectAll("td")
+		        .data(function(d) {    
+		        //console.log("colnames",colnames, "d",d);             
+		          return colnames.map(function(k) {
+		          	console.log("value:",d[k]?d[k]: "no value",d,k,d[k]); 
+		            return d[k]?d[k]: "no value";              
+		          });
+		        })
+		      .enter().append("td");
+		    //Direct value
+		    //tds.filter(function(d) { return (typeof(d)==="string" || typeof(d)==="number"); })
+		    tds.filter(function(d) { return !(d instanceof Array || typeof(d)==="object"); })
+		        .text(function(d) { return d; });
+		    //Array or object, not string, recursion!
+		    tds.filter(function(d) { return (d instanceof Array || typeof(d)==="object"); })
+		        .append("table")
+		        .call(renderSingleTable);
+		  });
+		}
+	</script>
+
+
+</body>
+</html>
