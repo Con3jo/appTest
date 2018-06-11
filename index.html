@@ -9,41 +9,41 @@
 
 </head>
 <style>
-table{
-	border: none;
-}
-body{
-	font-family: sans-serif;
-}
+	table{
+		border: none;
+	}
+	body{
+		font-family: sans-serif;
+	}
 
-/*Todo refactor this! */
-tr th{
-	padding: 4px 15px;
-	background-color: rgba(100, 200, 200);
-	border: none;
-	border-radius: 5px;
-
-
-}
-tr td{
-	background-color: rgba(200,200,200,.3);
-	padding: 2px 15px;
-	border: none;
-	border-radius: 5px;
+	/*Todo refactor this! alpha value must be variable*/
+	tr th{
+		padding: 4px 15px;
+		background-color: rgba(100, 200, 200);
+		border: none;
+		border-radius: 5px;
 
 
-}
-tr td table tr th{
-	background-color: rgba(100,200,200,.7);
-}
-tr td table tr td table tr th{
-	background-color: rgba(100,200,200,.5);
+	}
+	tr td{
+		background-color: rgba(200,200,200,.3);
+		padding: 2px 15px;
+		border: none;
+		border-radius: 5px;
 
-}
-tr td table tr td table tr td table tr th{
-	background-color: rgba(100,200,200,.2);
 
-}
+	}
+	tr td table tr th{
+		background-color: rgba(100,200,200,.7);
+	}
+	tr td table tr td table tr th{
+		background-color: rgba(100,200,200,.5);
+
+	}
+	tr td table tr td table tr td table tr th{
+		background-color: rgba(100,200,200,.2);
+
+	}
 </style>
 <body>
 
@@ -81,9 +81,6 @@ tr td table tr td table tr td table tr th{
 		        	d = [d];
 		        }
 
-
-		      //console.log("data",d);
-
 		    //Header
 		    table.append("thead").append("tr").selectAll("th")
 		        .data(colnames)
@@ -98,7 +95,7 @@ tr td table tr td table tr td table tr th{
 		        //console.log("colnames",colnames, "d",d);             
 		          return colnames.map(function(k) {
 		          	console.log("value:",d[k]?d[k]: "no value",d,k,d[k]); 
-		            return d[k]?d[k]: "no value";              
+		          	return d[k]?d[k]: "no value";              
 		          });
 		        })
 		      .enter().append("td");
